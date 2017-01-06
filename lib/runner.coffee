@@ -22,9 +22,11 @@ module.exports =
         @columnArg = false
       [command, args...] = @commandString.split(/\s/)
       args.push @search
+      args.push "." if command == "grep"
       options = cwd: @rootPath, stdio: ['ignore', 'pipe', 'pipe'], env: @env
 
       stdout = (output)=>
+        console.dir(output)
         if listItems.length > atom.config.get('atom-fuzzy-grep.maxCandidates')
           @destroy()
           return
@@ -68,7 +70,7 @@ module.exports =
 
     isGitRepo: ->
       atom.project.repositories.some (item)=>
-        @rootPath?.startsWith(item.repo?.openedWorkingDirectory) if item
+        @rootPath?.startsWith(item.repo?.workingDirectory) if item
 
     detectColumnFlag: ->
       /(ag|pt|ack|rg)$/.test(@commandString.split(/\s/)[0]) and ~@commandString.indexOf('--column')
