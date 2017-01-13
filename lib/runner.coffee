@@ -9,25 +9,26 @@ module.exports =
     env: process.env
 
     constructor: ()->
-      atom.config.observe 'atom-fuzzy-grep.grepCommandString', =>
-        @commandString = atom.config.get 'atom-fuzzy-grep.grepCommandString'
+      atom.config.observe 'atom-fuzzy-projects-grep.grepCommandString', =>
+        @commandString = atom.config.get 'atom-fuzzy-projects-grep.grepCommandString'
         @columnArg = @detectColumnFlag()
-      atom.config.observe 'atom-fuzzy-grep.detectGitProjectAndUseGitGrep', =>
-        @useGitGrep = atom.config.get 'atom-fuzzy-grep.detectGitProjectAndUseGitGrep'
+      atom.config.observe 'atom-fuzzy-projects-grep.detectGitProjectAndUseGitGrep', =>
+        @useGitGrep = atom.config.get 'atom-fuzzy-projects-grep.detectGitProjectAndUseGitGrep'
 
     run: (@search, @rootPath, callback)->
       listItems = []
       if @useGitGrep and @isGitRepo()
-        @commandString = atom.config.get 'atom-fuzzy-grep.gitGrepCommandString'
+        @commandString = atom.config.get 'atom-fuzzy-projects-grep.gitGrepCommandString'
         @columnArg = false
       [command, args...] = @commandString.split(/\s/)
       args.push @search
       args.push "." if command == "grep"
       options = cwd: @rootPath, stdio: ['ignore', 'pipe', 'pipe'], env: @env
-
+      debugger;
+      
       stdout = (output)=>
         console.dir(output)
-        if listItems.length > atom.config.get('atom-fuzzy-grep.maxCandidates')
+        if listItems.length > atom.config.get('atom-fuzzy-projects-grep.maxCandidates')
           @destroy()
           return
         listItems = listItems.concat(@parseOutput(output))

@@ -23,18 +23,18 @@ class GrepView extends SelectListView
     @subscriptions.add atom.commands.add(@filterEditorView.element, 'fuzzy-grep:toggleFileFilter', @toggleFileFilter)
     @subscriptions.add atom.commands.add(@filterEditorView.element, 'fuzzy-grep:pasteEscaped', @pasteEscaped)
     @panel = atom.workspace.addModalPanel(item: this, visible: false)
-    @addClass 'atom-fuzzy-grep'
+    @addClass 'atom-fuzzy-projects-grep'
     @runner = new Runner
     @setupConfigs()
 
   setupConfigs: ->
-    @subscriptions.add atom.config.observe 'atom-fuzzy-grep.minSymbolsToStartSearch', (@minFilterLength) =>
-    @subscriptions.add atom.config.observe 'atom-fuzzy-grep.maxCandidates', (@maxItems) =>
-    @subscriptions.add atom.config.observe 'atom-fuzzy-grep.preserveLastSearch', (@preserveLastSearch) =>
-    @subscriptions.add atom.config.observe 'atom-fuzzy-grep.escapeSelectedText', (@escapeSelectedText) =>
-    @subscriptions.add atom.config.observe 'atom-fuzzy-grep.showFullPath', (@showFullPath) =>
-    @subscriptions.add atom.config.observe 'atom-fuzzy-grep.inputThrottle', (@inputThrottle) =>
-    @subscriptions.add atom.config.observe 'atom-fuzzy-grep.escapeOnPaste', (@escapeOnPaste) =>
+    @subscriptions.add atom.config.observe 'atom-fuzzy-projects-grep.minSymbolsToStartSearch', (@minFilterLength) =>
+    @subscriptions.add atom.config.observe 'atom-fuzzy-projects-grep.maxCandidates', (@maxItems) =>
+    @subscriptions.add atom.config.observe 'atom-fuzzy-projects-grep.preserveLastSearch', (@preserveLastSearch) =>
+    @subscriptions.add atom.config.observe 'atom-fuzzy-projects-grep.escapeSelectedText', (@escapeSelectedText) =>
+    @subscriptions.add atom.config.observe 'atom-fuzzy-projects-grep.showFullPath', (@showFullPath) =>
+    @subscriptions.add atom.config.observe 'atom-fuzzy-projects-grep.inputThrottle', (@inputThrottle) =>
+    @subscriptions.add atom.config.observe 'atom-fuzzy-projects-grep.escapeOnPaste', (@escapeOnPaste) =>
 
   getFilterKey: ->
     if @isFileFiltering then 'filePath' else ''
