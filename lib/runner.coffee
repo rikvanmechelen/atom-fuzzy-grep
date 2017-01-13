@@ -24,7 +24,6 @@ module.exports =
       args.push @search
       args.push "." if command == "grep"
       options = cwd: @rootPath, stdio: ['ignore', 'pipe', 'pipe'], env: @env
-      debugger;
       
       stdout = (output)=>
         console.dir(output)
